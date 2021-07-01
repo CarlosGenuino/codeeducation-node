@@ -1,0 +1,38 @@
+version: '3'
+
+services: 
+    node:
+        build: 
+            context: ./node
+        container_name: node
+        networks: 
+            - fcdnet
+        depends_on: 
+            - db
+    
+    nginx:
+        build: 
+            context: ./nginx
+        container_name: nginx
+        ports: 
+            - "8080:80"
+        networks: 
+            - fcdnet
+    
+    db:
+        image: mysql:5.7
+        command: --innodb-use-native-aio=0
+        container_name: db
+        restart: always
+        tty: true
+        volumes: 
+            - ./mysql:/var/lib/mysql
+        environment: 
+            - MYSQL_DATABASE=nodedb
+            - MYSQL_ROOT_PASSWORD=root
+        networks: 
+            - fcdnet
+
+networks:
+    fcdnet:
+        driver: 'bridge'
