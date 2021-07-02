@@ -1,15 +1,21 @@
 version: '3'
+networks:
+    fcdnet:
+        driver: 'bridge'
 
 services: 
     node:
         build: 
             context: ./node
         container_name: node
+        volumes: 
+            - ./node:/usr/src/app
         networks: 
             - fcdnet
         depends_on: 
             - db
-    
+        entrypoint: dockerize -wait tcp://db:3306 -timeout 20s node index.js
+        
     nginx:
         build: 
             context: ./nginx
@@ -18,6 +24,8 @@ services:
             - "8080:80"
         networks: 
             - fcdnet
+        depends_on: 
+            - node
     
     db:
         image: mysql:5.7
@@ -33,6 +41,3 @@ services:
         networks: 
             - fcdnet
 
-networks:
-    fcdnet:
-        driver: 'bridge'

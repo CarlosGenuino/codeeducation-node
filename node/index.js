@@ -25,7 +25,7 @@ connection.query(create_database);
 
 connection = mysql.createConnection(config);
 
-connection.query('drop table people;')
+connection.query('drop table if exists people;')
 
 const create_table = `create table if not exists people(id INT AUTO_INCREMENT PRIMARY KEY, name varchar(255))`
 
