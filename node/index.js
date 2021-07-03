@@ -35,7 +35,7 @@ const sql = `INSERT INTO people(name) values('João')`
 
 connection.query(sql)
 
-let table;
+let table = '';
 
 connection.query("SELECT * FROM people", function (err, result, fields) {
     if (err) throw err;

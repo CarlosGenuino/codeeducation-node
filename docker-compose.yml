@@ -10,6 +10,7 @@ services:
         container_name: node
         volumes: 
             - ./node:/usr/src/app
+            - /usr/src/app/node_modules
         networks: 
             - fcdnet
         depends_on: 

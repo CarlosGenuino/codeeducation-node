@@ -15,13 +15,12 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 # copy the package.json files from local machine to the workdir in container
-#COPY package*.json ./
+COPY . .
 
 # run npm install in our local machine
 RUN npm install
 
 # copy the generated modules and all other files to the container
-#COPY . .
 
 # our app is running on port 3000 within the container, so need to expose it
 EXPOSE 3000
